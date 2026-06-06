@@ -607,6 +607,88 @@
       &[open] summary { margin-bottom: 1rem; }
     }
 
+    /* ── MELODY SECTION ── */
+    .melody-banner {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      border-radius: var(--r);
+      padding: 2.2rem 2rem;
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(circle, rgba(255,255,255,.06) 1px, transparent 1px);
+        background-size: 28px 28px;
+        pointer-events: none;
+      }
+
+      .melody-label {
+        font-family: var(--mono);
+        font-size: .65rem;
+        letter-spacing: .18em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,.7);
+        margin-bottom: .6rem;
+      }
+
+      h3 {
+        font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+        font-weight: 600;
+        color: #fff;
+        letter-spacing: -.02em;
+        line-height: 1.2;
+        margin-bottom: .6rem;
+      }
+
+      p {
+        font-size: .88rem;
+        color: rgba(255,255,255,.8);
+        line-height: 1.75;
+        max-width: 70ch;
+      }
+    }
+
+    .melody-tracks {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .track-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 1.3rem;
+      position: relative;
+      transition: border-color .2s, box-shadow .2s;
+
+      &:hover {
+        border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+        box-shadow: 0 4px 16px rgba(26,58,160,.06);
+      }
+
+      .track-num {
+        font-family: var(--mono);
+        font-size: .62rem;
+        color: var(--accent);
+        letter-spacing: .1em;
+        margin-bottom: .5rem;
+        opacity: .7;
+      }
+
+      h4 {
+        font-size: .92rem;
+        font-weight: 500;
+        margin-bottom: .4rem;
+      }
+
+      p { font-size: .8rem; color: var(--muted); line-height: 1.7; }
+    }
+
     /* ── FOOTER ── */
     footer {
       text-align: center;
@@ -647,6 +729,7 @@
   <ul>
     <li><a href="#about">About</a></li>
     <li><a href="#projects">Projects</a></li>
+    <li><a href="#melody">ANR MELODY</a></li>
     <li><a href="#abudhabi">Abu Dhabi</a></li>
     <li><a href="#collab">Collaborations</a></li>
     <li><a href="#publications">Publications</a></li>
@@ -954,10 +1037,64 @@
   </div>
 </section>
 
+<!-- ── ANR MELODY ── -->
+<section class="section alt" id="melody">
+  <div class="section-head">
+    <span class="num">03</span>
+    <h2>ANR MELODY</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="melody-banner reveal">
+    <div class="melody-label">ANR · TSIA · 2026–2030 · Principal Investigator</div>
+    <h3>Music, Encoding, Learning, Data<br>and Open pOlYphony</h3>
+    <p>
+      A four-year French national research project (Agence Nationale de la Recherche) on AI and music. The core question: can machines learn to <em>understand</em> music the way a trained musician does — not just pattern-match, but reason about counterpoint, style, and structure? We're building the models, the datasets, and the evaluation tools to find out. We'll be at this for a while. Good.
+    </p>
+  </div>
+
+  <p style="font-size:.88rem;color:var(--muted);max-width:65ch;line-height:1.85;margin-bottom:2rem;">
+    MELODY covers four interconnected research tracks, all running in parallel on the CAPTAL-LAB infrastructure (local machines + Eurasia GPU cluster). The target output: open datasets, reproducible models, and a substantial contribution to the ISMIR community. 2026 is just the start.
+  </p>
+
+  <div class="melody-tracks">
+
+    <div class="track-card reveal">
+      <div class="track-num">TRACK A · Datasets</div>
+      <h4>HARMONIA</h4>
+      <p>A large-scale symbolic music corpus spanning five centuries with harmonic annotations. Pipeline running on Eurasia. ~5,000 pieces expected. The infrastructure for everything else.</p>
+    </div>
+
+    <div class="track-card reveal">
+      <div class="track-num">TRACK B · Generation</div>
+      <h4>GEMMA-PDMX &amp; Hybrid-Model</h4>
+      <p>Two parallel approaches to symbolic music generation: a fine-tuned Gemma with preference alignment on French Baroque polyphony, and a Transformer+Diffusion+VAE tripartite architecture for soprano inpainting and conditioned generation.</p>
+    </div>
+
+    <div class="track-card reveal">
+      <div class="track-num">TRACK C · Reasoning</div>
+      <h4>MUSIC-REASONING / ZR1</h4>
+      <p>Can a small language model reason through counterpoint? Chain-of-thought traces from music theory treatises, fine-tuning DeepSeek-R1 on voice-leading tasks. The model thinks before it writes notes. TISMIR target.</p>
+    </div>
+
+    <div class="track-card reveal">
+      <div class="track-num">TRACK D · Infrastructure</div>
+      <h4>melody-forge &amp; PDMX Explorer</h4>
+      <p>Open-source toolchain for symbolic music ingestion, conversion, and analysis. Drop a score file in; get ABC, MusicXML, AST, and AI-driven musicological analysis out. Freely available on GitHub and HAL.</p>
+    </div>
+
+  </div>
+
+  <div style="margin-top:2rem;padding:1.2rem 1.5rem;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);font-size:.82rem;color:var(--muted);line-height:1.8;max-width:62ch;" class="reveal">
+    <span style="font-family:var(--mono);font-size:.68rem;color:var(--accent);letter-spacing:.1em;display:block;margin-bottom:.4rem;">OPEN SCIENCE</span>
+    All MELODY datasets, models, and tools are released openly — Zenodo, HAL, GitHub. The project runs on the conviction that computational musicology advances faster when the infrastructure is shared.
+  </div>
+</section>
+
 <!-- ── ABU DHABI ── -->
 <section class="section ad" id="abudhabi">
   <div class="section-head">
-    <span class="num gold-num">03</span>
+    <span class="num gold-num">04</span>
     <h2>Abu Dhabi — Sorbonne 🇦🇪</h2>
     <div class="line"></div>
   </div>
@@ -1044,7 +1181,7 @@
 <!-- ── COLLABORATIONS ── -->
 <section class="section alt" id="collab">
   <div class="section-head">
-    <span class="num">04</span>
+    <span class="num">05</span>
     <h2>Collaborators</h2>
     <div class="line"></div>
   </div>
@@ -1078,7 +1215,7 @@
 <!-- ── PUBLICATIONS ── -->
 <section class="section" id="publications">
   <div class="section-head">
-    <span class="num">05</span>
+    <span class="num">06</span>
     <h2>Publications &amp; Datasets</h2>
     <div class="line"></div>
   </div>
