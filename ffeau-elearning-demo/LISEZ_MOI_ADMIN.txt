@@ -1,0 +1,114 @@
+=======================================================================
+   GUIDE D'ADMINISTRATION : PLATEFORME E-LEARNING FFEAU
+=======================================================================
+
+Ce document s'adresse aux personnes chargées d'administrer, de modifier
+ou d'ajouter de nouveaux modules de formation sur la plateforme.
+
+Le système a été conçu de manière totalement autonome (sans base de
+données, sans serveur spécifique). Tout le contenu et la logique
+sont embarqués dans les fichiers HTML.
+
+-----------------------------------------------------------------------
+1. ARCHITECTURE DES FICHIERS
+-----------------------------------------------------------------------
+Le dossier d'exportation comprend :
+- `index.html` : Le portail d'accueil et le catalogue.
+- `formation-*.html` : Les différents modules (un fichier par module).
+- `téléchargement.png` : Image optionnelle (logos, etc.).
+
+Pour publier la plateforme, il suffit de copier l'intégralité de ce
+dossier sur un serveur Intranet, un dossier partagé, ou même une
+clé USB. Le point d'entrée est toujours `index.html`.
+
+-----------------------------------------------------------------------
+2. COMMENT CRÉER UN NOUVEAU MODULE ?
+-----------------------------------------------------------------------
+1. Dupliquez un fichier de formation existant (ex: `formation-vss-themis.html`).
+2. Renommez-le (ex: `formation-nouveau-sujet.html`).
+3. Ouvrez le nouveau fichier avec un éditeur de texte (Bloc-notes,
+   Notepad++, VS Code, etc.).
+4. Défilez tout en bas du fichier, juste avant les balises de fin.
+   Vous trouverez un bloc de code commençant par `const MODULE = {`.
+5. Modifiez le contenu de cet objet (voir détails section 3).
+6. Ouvrez `index.html` et ajoutez une nouvelle "carte" (`<article class="course">`)
+   dans la section `#catalogue` qui pointe vers votre nouveau fichier.
+
+-----------------------------------------------------------------------
+3. PARAMÉTRER LE CONTENU (Objet MODULE)
+-----------------------------------------------------------------------
+L'objet MODULE définit l'intégralité du contenu pédagogique.
+
+Exemple de base :
+const MODULE = {
+  title: "Titre du module",
+  intro: "Phrase d'introduction sur la page d'accueil du module.",
+  duration: "≈ 15 min",
+  passPercent: 80,       // Pourcentage de bonnes réponses requis
+  poolSize: 5,           // Nombre de questions tirées au sort (0 = toutes)
+  disclaimer: "Source des informations...",
+
+  lessons: [
+    // CHAPITRES DE COURS
+    {
+      icon: "📘",
+      title: "Titre du chapitre",
+      html: "<p>Texte du cours.</p><ul><li>Point 1</li></ul>"
+    }
+  ],
+
+  quiz: [
+    // QUESTIONS
+    {
+      cat: "Catégorie",
+      q: "Quel est l'âge du capitaine ?",
+      options: ["42 ans", "50 ans", "30 ans"],
+      a: 0,
+      why: "Explication affichée après la réponse.",
+      type: "single"
+    }
+  ]
+};
+
+--- STRUCTURE DES CHAPITRES (lessons) ---
+Chaque chapitre doit comporter une icône (emoji), un titre, et le contenu
+en HTML.
+Balises HTML recommandées dans le contenu :
+- Paragraphes : `<p>Texte</p>`
+- Listes : `<ul><li>Élément</li></ul>`
+- Titres internes : `<h3>Sous-titre</h3>`
+- Encadré classique : `<div class="callout"><b>Titre :</b> Texte</div>`
+- Encadré alerte : `<div class="callout warn"><b>Attention :</b> Texte</div>`
+- Source : `<div class="src">Source : ...</div>`
+
+--- STRUCTURE DES QUESTIONS (quiz) ---
+Le moteur prend en charge deux types de questions :
+- Choix unique (`type: "single"` ou type omis par défaut)
+- Choix multiples (`type: "multi"`)
+
+• Choix unique :
+  `a` doit être le numéro de la bonne réponse (0 pour la première, 1 pour la 2ème...).
+  Ex: `a: 1`
+
+• Choix multiples (Cases à cocher) :
+  `type: "multi"`
+  `a` doit être un tableau contenant les numéros des bonnes réponses.
+  Ex: `a: [0, 2, 3]`
+
+Si `poolSize` est défini (ex: `poolSize: 5`), le système tirera au sort 5
+questions parmi toutes celles de la liste `quiz` pour chaque stagiaire,
+évitant ainsi que tout le monde n'ait le même questionnaire.
+
+-----------------------------------------------------------------------
+4. CERTIFICATION ET EMAIL
+-----------------------------------------------------------------------
+En cas de réussite, un certificat est généré automatiquement.
+La référence du certificat est unique et calculée en fonction du nom du
+stagiaire, du score et du module.
+
+Un bouton "Envoyer par Email" utilise le lien `mailto:` pour pré-remplir
+un email avec le client de messagerie par défaut du poste. Aucune
+configuration serveur n'est nécessaire.
+
+Conçu par le SCAI et SUAD - 2026.
+=======================================================================
